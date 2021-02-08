@@ -1,0 +1,3 @@
+__________Lista de Produto_________
+ - |CODIGO| 11 |NOME| milho |PREÇO| 2,500000 |QUANTIDADE| 100
+ - |CODIGO| e50 |NOME| feijao |PREÇO| 5,000000 |QUANTIDADE| 200
