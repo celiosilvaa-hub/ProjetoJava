@@ -1,21 +1,12 @@
 package Projeto;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import javax.swing.JOptionPane;
-
-
 import Projeto.InOut;
 
 public class TelaPrinicipal {
@@ -23,13 +14,13 @@ public class TelaPrinicipal {
 	static ArrayList<Produto> listaProduto = new ArrayList<Produto>();
 	
 	public static void main(String[] args) throws IOException{
-	//chamando a funação MEU
-		Menu();
+		//chamando a funação MEU
+		menu();
 		System.out.println("Programa Finzalizado");
 	}
 	
 	// Método criar menu
-	static void Menu() throws IOException{
+	static void menu() throws IOException{
 		
 		int op;
 		try {
@@ -48,16 +39,16 @@ public class TelaPrinicipal {
 					InOut.OutMessage("O programa será Finalizado", "Atenção");
 					break;
 				case 1:
-					CadastrarProduto();
+					cadastrarProduto();
 					break;
 				case 2:
-					BuscaProduto();
+					buscarProduto();
 					break;
 				case 3:
-					ListaProduto();
+					listarProduto();
 					break;
 				case 4:
-					AlterarProduto();
+					alterarProduto();
 					break;			
 				default:
 					InOut.OutMessage("Opção Invalida!", "Erro!");
@@ -66,22 +57,22 @@ public class TelaPrinicipal {
 			}while(op != 0);
 		}catch (NumberFormatException nfe) {
         InOut.OutMessage("Opção invalida!!");
-        Menu();
+        menu();
 		}
 	}
 	
 	//Método cadastrar produto
-	static void CadastrarProduto() {
+	static void cadastrarProduto() {
 		
 		try {
 			
 			String codigoNovo = InOut.InString("Digite o código do Produto:");
 			
-			Produto produto = ProcurarProduto(codigoNovo);
+			Produto produto = procurarProduto(codigoNovo);
 			if (produto != null) {
 				
-				String codigoExistente = InOut.InString("Este produto já existe: ");
-				Menu();
+				InOut.InString("Este produto já existe: ");
+				menu();
 				return;
 			}else {
 			
@@ -101,7 +92,7 @@ public class TelaPrinicipal {
 	}
 	
 	//Método exibi lista de produtos existente
-	static void ListaProduto() throws IOException{
+	static void listarProduto() throws IOException{
 		abrirArquivoTXT("listaProduto.txt");
 		
 		if(listaProduto.isEmpty()){
@@ -117,16 +108,16 @@ public class TelaPrinicipal {
 			gravaArq.printf(" - |CODIGO| %s |NOME| %s |PREÇO| %f |QUANTIDADE| %d\n", 
 							prod.getCodigo(), prod.getNome(), prod.getPreco(), prod.getQuantidade());
 			
-			relatorio += String.format("\nCodigo |___ %s ___| \nNome |___ %s ___| \nPreço |___ R$ %f ___| \nQuantidade |___ %d ___|",
+			relatorio += String.format(	"\nCÓDIGO |___ %s ___| \nNOME |___ %s ___| \nPREÇO |___ R$ %.2f ___| \nQUANTIDADE |___ %d ___|",
 					prod.getCodigo(), prod.getNome(), prod.getPreco(), prod.getQuantidade()) +
-						 "\n________________________\r";
+						 "\n___________________________________\r";
 		}
 		gravaArq.close();
 		InOut.OutMessage(relatorio);
 	}
 	
 	//Método para alterar produtos da lista
-	static void AlterarProduto(){
+	static void alterarProduto(){
 		abrirArquivoTXT("listaProduto.txt");
 		
 		if(listaProduto.size() == 0){
@@ -134,8 +125,7 @@ public class TelaPrinicipal {
 			return;
 		}
 		String codigoProdutoPesquisar = InOut.InString("Digite o código do Produto:");
-		
-		Produto produto = ProcurarProduto(codigoProdutoPesquisar);
+		Produto produto = procurarProduto(codigoProdutoPesquisar);
 		if (produto != null) {
 			String codigoNovo = InOut.InString("Novo código: ");
 			produto.setCodigo(codigoNovo);
@@ -159,8 +149,8 @@ public class TelaPrinicipal {
 		else InOut.OutMessage("Produto não encontrado");		
 	}
 	
-	//Função Busca um produto na lista.
-	static void BuscaProduto(){
+	//Método Buscar um produto na lista.
+	static void buscarProduto(){
 		abrirArquivoTXT("listaProduto.txt");
 		
 		if(listaProduto.size() == 0){
@@ -168,7 +158,7 @@ public class TelaPrinicipal {
 			return;
 		}
 		String codigoProdutoPesquisar = InOut.InString("Digite o código do Produto:");
-		Produto produto = ProcurarProduto(codigoProdutoPesquisar);
+		Produto produto = procurarProduto(codigoProdutoPesquisar);
 		if (produto != null) {
 			InOut.OutMessage(" " + produto);
 			return;
@@ -176,8 +166,8 @@ public class TelaPrinicipal {
 		InOut.OutMessage("Produto não Encontrado");
 	}
 		
-	//Método busca um produto existente
-	static Produto ProcurarProduto(String codigo) {
+	//Método para fazer farredura na lista
+	static Produto procurarProduto(String codigo) {
 		for (Produto produto : listaProduto) {
 			if (produto.getCodigo().equalsIgnoreCase(codigo)) {
 				return produto;

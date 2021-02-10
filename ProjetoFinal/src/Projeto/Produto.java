@@ -1,5 +1,4 @@
 package Projeto;
-
 import java.io.Serializable;
 
 //Classe produto
@@ -44,15 +43,14 @@ public class Produto implements Serializable {
 		this.quantidade = quantidade;
 	}
 	
+	//Retorna uma busca
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return String.format("Produto{Codigo=%s, Nome=%s, Preco=%f, Qtde=%d}", codigo, nome, preco, quantidade);
+		return String.format("PRODUTO SELECIONADO:"
+				+ "\n_____________________________________"
+				+ "\nCÓDIGO |___ %s ___| \nNOME |___ %s ___| \nPREÇO |___ R$ %.2f ___| \nQUANTIDADE |___ %d ___|",
+						getCodigo(), getNome(), getPreco(), getQuantidade()) +
+				 "\n______________________________________\r";
 	}
-
-	public void printf(String string, String codigo2, String nome2, double preco2, int quantidade2) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
